@@ -27,7 +27,7 @@ namespace Skate_Score
      * Write to the console one line per competitor with the following fields:
      *    Rank#, Name, Country Code, Scores: Total, Run 1, Run 2, Trick 1, Trick 2, Trick 3, Trick 4, Trick 5
      * For example: the first line might read as follows:
-     *    1, HORIGOME Yuto, JPN, 8.02, 6.77, 9.03, 0.00, 9.35, 9.50, 9.30, 37.18
+     *    1, HORIGOME Yuto, JPN, 37.18, 8.02, 6.77, 9.03, 0.00, 9.35, 9.50, 9.30
      ***/
 
     class Program
