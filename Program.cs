@@ -1,5 +1,6 @@
 ﻿#define SHOW_RAW_SCORES
 using System;
+using System.Diagnostics;
 
 namespace Skate_Score
 {
@@ -32,6 +33,8 @@ namespace Skate_Score
 
     class Program
     {
+        public const int NUM_ELEMENTS = 7;
+
         public static Competitor[] competitors =
         {
             /*0*/ new Competitor("CARO NARVAEZ Angelo", "PER"),
@@ -54,21 +57,66 @@ namespace Skate_Score
             Console.WriteLine("RAW SCORES:");
             foreach (var e in scoreData)
             {
-                Console.WriteLine($"{e.competitor.name}, {e.competitor.country}, {e.judgeScores[0]}, {e.judgeScores[1]}, {e.judgeScores[2]}, {e.judgeScores[3]}, {e.judgeScores[4]}");
+                Console.WriteLine($"{e.competitor.name,-20}, {e.competitor.country,3}, {e.judgeScores[0],5:F1}, {e.judgeScores[1],5:F1}, {e.judgeScores[2],5:F1}, {e.judgeScores[3],5:F1}, {e.judgeScores[4],5:F1}");
             }
             Console.WriteLine();
 #endif
 
-            // TODO - Process the scores to determine the ranked order of competitors final scores
-        }
+            // Process the scores to determine the ranked order of competitors final scores
 
+            Result[] results = new Result[competitors.Length];
+
+            for (int c = 0; c < competitors.Length; c++)
+            {
+                var result = new Result();
+                result.competitor = scoreData[c].competitor;
+                float lowestScore = float.PositiveInfinity;
+                float secondLowestScore = float.PositiveInfinity;
+                for (int e = 0; e < NUM_ELEMENTS; e++)
+                {
+                    var s = scoreData[c + e * competitors.Length];
+                    Debug.Assert(s.competitor == result.competitor);
+                    float minScore = float.PositiveInfinity;
+                    float maxScore = float.NegativeInfinity;
+                    float sum = 0f;
+                    for (int j = 0; j < s.judgeScores.Length; j++)
+                    {
+                        float score = s.judgeScores[j];
+                        if (score < minScore) minScore = score;
+                        if (score > maxScore) maxScore = score;
+                        sum += score;
+                    }
+                    // Toss out the highest and lowest scores, then compute the average
+                    sum -= maxScore;
+                    sum -= minScore;
+                    float averageScore = sum / (s.judgeScores.Length - 2);
+                    result.elementScores[e] = averageScore;
+                    result.totalScore += averageScore;
+                    if (averageScore < lowestScore) lowestScore = averageScore;
+                    else if (averageScore < secondLowestScore) secondLowestScore = averageScore;
+                }
+                // Toss out the 2 lowest element scores
+                result.totalScore -= secondLowestScore;
+                result.totalScore -= lowestScore;
+                results[c] = result;
+            }
+
+            Array.Sort(results, (a, b) => Math.Sign(b.totalScore - a.totalScore));
+
+            Console.WriteLine("NAME                , NOC,  TOTAL,   Run1,   Run2, Trick1, Trick2, Trick3, Trick4, Trick5");
+            for (int i = 0; i < results.Length; i++)
+            {
+                var r = results[i];
+                Console.WriteLine($"{r.competitor.name,-20}, {r.competitor.country,3}, {r.totalScore,6:F2}, {r.elementScores[0],6:F2}, {r.elementScores[1],6:F2}, {r.elementScores[2],6:F2}, {r.elementScores[3],6:F2}, {r.elementScores[4],6:F2}, {r.elementScores[5],6:F2}, {r.elementScores[6],6:F2}");
+            }
+            Console.WriteLine();
+        }
 
         /**************************************************************************************************/
 
         private static void InitializeEventStats()
         {
             var rand = new Random(2021);
-            const int NUM_ELEMENTS = 7;
             scoreData = new ElementScores[competitors.Length * NUM_ELEMENTS];
             for (int e = 0; e < NUM_ELEMENTS; e++)
             {
