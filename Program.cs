@@ -1,4 +1,4 @@
-﻿#define SHOW_RAW_SCORES
+﻿//#define SHOW_RAW_SCORES
 using System;
 using System.Diagnostics;
 
