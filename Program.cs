@@ -23,7 +23,7 @@ namespace Skate_Score
      *     The highest and lowest scores will be discarded.
      *     The average of the other three scores is awarded to the competitor.
      * - The four highest average scores from the seven elements (i.e., discard lowest 3 scores)
-     *   are then added together to give the TOTAL SCORE (a value between 0.00 and 100.00).
+     *   are then added together to give the TOTAL SCORE (a value between 0.00 and 40.00).
      * Write to the console one line per competitor with the following fields:
      *    Rank#, Name, Country Code, Scores: Total, Run 1, Run 2, Trick 1, Trick 2, Trick 3, Trick 4, Trick 5
      * For example: the first line might read as follows:
@@ -32,6 +32,8 @@ namespace Skate_Score
 
     class Program
     {
+        const int NUM_ELEMENTS = 7; // 2 runs + 5 tricks
+
         public static Competitor[] competitors =
         {
             /*0*/ new Competitor("CARO NARVAEZ Angelo", "PER"),
@@ -68,7 +70,6 @@ namespace Skate_Score
         private static void InitializeEventStats()
         {
             var rand = new Random(2021);
-            const int NUM_ELEMENTS = 7;
             scoreData = new ElementScores[competitors.Length * NUM_ELEMENTS];
             for (int e = 0; e < NUM_ELEMENTS; e++)
             {
