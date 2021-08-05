@@ -24,11 +24,11 @@ namespace Skate_Score
      *     The highest and lowest scores will be discarded.
      *     The average of the other three scores is awarded to the competitor.
      * - The four highest average scores from the seven elements (i.e., discard lowest 3 scores)
-     *   are then added together to give the TOTAL SCORE (a value between 0.00 and 100.0).
+     *   are then added together to give the TOTAL SCORE (a value between 0.00 and 40.00).
      * Write to the console one line per competitor with the following fields:
      *    Rank#, Name, Country Code, Scores: Total, Run 1, Run 2, Trick 1, Trick 2, Trick 3, Trick 4, Trick 5
      * For example: the first line might read as follows:
-     *    1, HORIGOME Yuto, JPN, 8.02, 6.77, 9.03, 0.00, 9.35, 9.50, 9.30, 37.18
+     *    1, HORIGOME Yuto, JPN, 37.18, 8.02, 6.77, 9.03, 0.00, 9.35, 9.50, 9.30
      ***/
 
     class Program
@@ -124,11 +124,11 @@ namespace Skate_Score
                 {
                     var es = new ElementScores(competitors[c]);
                     int r = rand.Next(10, 91);
-                    es.judgeScores[0] = r + rand.Next(-10, 11) / 10f;
-                    es.judgeScores[1] = r + rand.Next(-10, 11) / 10f;
-                    es.judgeScores[2] = r + rand.Next(-10, 11) / 10f;
-                    es.judgeScores[3] = r + rand.Next(-10, 11) / 10f;
-                    es.judgeScores[4] = r + rand.Next(-10, 11) / 10f;
+                    es.judgeScores[0] = (r + rand.Next(-10, 11)) / 10f;
+                    es.judgeScores[1] = (r + rand.Next(-10, 11)) / 10f;
+                    es.judgeScores[2] = (r + rand.Next(-10, 11)) / 10f;
+                    es.judgeScores[3] = (r + rand.Next(-10, 11)) / 10f;
+                    es.judgeScores[4] = (r + rand.Next(-10, 11)) / 10f;
                     scoreData[c + e * competitors.Length] = es;
                 }
             }
