@@ -56,7 +56,7 @@ namespace Skate_Score
             Console.WriteLine("RAW SCORES:");
             foreach (var e in scoreData)
             {
-                Console.WriteLine($"{e.competitor.name}, {e.competitor.country}, {e.judgeScores[0]}, {e.judgeScores[1]}, {e.judgeScores[2]}, {e.judgeScores[3]}, {e.judgeScores[4]}");
+                Console.WriteLine($"{e.competitor.name,-20} {e.competitor.country,3} {e.judgeScores[0],5:F1} {e.judgeScores[1],5:F1} {e.judgeScores[2],5:F1} {e.judgeScores[3],5:F1} {e.judgeScores[4],5:F1}");
             }
             Console.WriteLine();
 #endif
