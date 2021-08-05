@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Skate_Score
+﻿namespace Skate_Score
 {
     class ElementScores
     {
