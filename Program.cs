@@ -33,7 +33,7 @@ namespace Skate_Score
 
     class Program
     {
-        const int NUM_ELEMENTS = 7; // 2 runs + 5 tricks
+        public const int NUM_ELEMENTS = 7; // 2 runs + 5 tricks
 
         public static Competitor[] competitors =
         {
