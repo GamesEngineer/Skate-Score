@@ -57,7 +57,7 @@ namespace Skate_Score
             Console.WriteLine("RAW SCORES:");
             foreach (var e in scoreData)
             {
-                Console.WriteLine($"{e.competitor.name,-20}, {e.competitor.country,3}, {e.judgeScores[0],5:F1}, {e.judgeScores[1],5:F1}, {e.judgeScores[2],5:F1}, {e.judgeScores[3],5:F1}, {e.judgeScores[4],5:F1}");
+                Console.WriteLine($"{e.competitor.name,-20} {e.competitor.country,3} {e.judgeScores[0],5:F1} {e.judgeScores[1],5:F1} {e.judgeScores[2],5:F1} {e.judgeScores[3],5:F1} {e.judgeScores[4],5:F1}");
             }
             Console.WriteLine();
 #endif
@@ -106,11 +106,11 @@ namespace Skate_Score
 
             Array.Sort(results, (a, b) => Math.Sign(b.totalScore - a.totalScore));
 
-            Console.WriteLine("NAME                , NOC,  TOTAL,   Run1,   Run2, Trick1, Trick2, Trick3, Trick4, Trick5");
+            Console.WriteLine("NAME                 NOC  TOTAL   Run1   Run2 Trick1 Trick2 Trick3 Trick4 Trick5");
             for (int i = 0; i < results.Length; i++)
             {
                 var r = results[i];
-                Console.WriteLine($"{r.competitor.name,-20}, {r.competitor.country,3}, {r.totalScore,6:F2}, {r.elementScores[0],6:F2}, {r.elementScores[1],6:F2}, {r.elementScores[2],6:F2}, {r.elementScores[3],6:F2}, {r.elementScores[4],6:F2}, {r.elementScores[5],6:F2}, {r.elementScores[6],6:F2}");
+                Console.WriteLine($"{r.competitor.name,-20} {r.competitor.country,3} {r.totalScore,6:F2} {r.elementScores[0],6:F2} {r.elementScores[1],6:F2} {r.elementScores[2],6:F2} {r.elementScores[3],6:F2} {r.elementScores[4],6:F2} {r.elementScores[5],6:F2} {r.elementScores[6],6:F2}");
             }
             Console.WriteLine();
         }
