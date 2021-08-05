@@ -72,6 +72,7 @@ namespace Skate_Score
                 result.competitor = scoreData[c].competitor;
                 float lowestScore = float.PositiveInfinity;
                 float secondLowestScore = float.PositiveInfinity;
+                float thirdLowestScore = float.PositiveInfinity;
                 for (int e = 0; e < NUM_ELEMENTS; e++)
                 {
                     var s = scoreData[c + e * competitors.Length];
@@ -94,8 +95,10 @@ namespace Skate_Score
                     result.totalScore += averageScore;
                     if (averageScore < lowestScore) lowestScore = averageScore;
                     else if (averageScore < secondLowestScore) secondLowestScore = averageScore;
+                    else if (averageScore < thirdLowestScore) thirdLowestScore = averageScore;
                 }
-                // Toss out the 2 lowest element scores
+                // Toss out the 3 lowest element scores
+                result.totalScore -= thirdLowestScore;
                 result.totalScore -= secondLowestScore;
                 result.totalScore -= lowestScore;
                 results[c] = result;
