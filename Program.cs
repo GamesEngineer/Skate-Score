@@ -68,40 +68,7 @@ namespace Skate_Score
 
             for (int c = 0; c < competitors.Length; c++)
             {
-                var result = new Result();
-                result.competitor = scoreData[c].competitor;
-                float lowestScore = float.PositiveInfinity;
-                float secondLowestScore = float.PositiveInfinity;
-                float thirdLowestScore = float.PositiveInfinity;
-                for (int e = 0; e < NUM_ELEMENTS; e++)
-                {
-                    var s = scoreData[c + e * competitors.Length];
-                    Debug.Assert(s.competitor == result.competitor);
-                    float minScore = float.PositiveInfinity;
-                    float maxScore = float.NegativeInfinity;
-                    float sum = 0f;
-                    for (int j = 0; j < s.judgeScores.Length; j++)
-                    {
-                        float score = s.judgeScores[j];
-                        if (score < minScore) minScore = score;
-                        if (score > maxScore) maxScore = score;
-                        sum += score;
-                    }
-                    // Toss out the highest and lowest scores, then compute the average
-                    sum -= maxScore;
-                    sum -= minScore;
-                    float averageScore = sum / (s.judgeScores.Length - 2);
-                    result.elementScores[e] = averageScore;
-                    result.totalScore += averageScore;
-                    if (averageScore < lowestScore) lowestScore = averageScore;
-                    else if (averageScore < secondLowestScore) secondLowestScore = averageScore;
-                    else if (averageScore < thirdLowestScore) thirdLowestScore = averageScore;
-                }
-                // Toss out the 3 lowest element scores
-                result.totalScore -= thirdLowestScore;
-                result.totalScore -= secondLowestScore;
-                result.totalScore -= lowestScore;
-                results[c] = result;
+                results[c] = ComputeResult(c);
             }
 
             Array.Sort(results, (a, b) => Math.Sign(b.totalScore - a.totalScore));
@@ -113,6 +80,44 @@ namespace Skate_Score
                 Console.WriteLine($"{r.competitor.name,-20} {r.competitor.country,3} {r.totalScore,6:F2} {r.elementScores[0],6:F2} {r.elementScores[1],6:F2} {r.elementScores[2],6:F2} {r.elementScores[3],6:F2} {r.elementScores[4],6:F2} {r.elementScores[5],6:F2} {r.elementScores[6],6:F2}");
             }
             Console.WriteLine();
+        }
+
+        private static Result ComputeResult(int c)
+        {
+            var result = new Result();
+            result.competitor = scoreData[c].competitor;
+            float lowestScore = float.PositiveInfinity;
+            float secondLowestScore = float.PositiveInfinity;
+            float thirdLowestScore = float.PositiveInfinity;
+            for (int e = 0; e < NUM_ELEMENTS; e++)
+            {
+                var s = scoreData[c + e * competitors.Length];
+                Debug.Assert(s.competitor == result.competitor);
+                float minScore = float.PositiveInfinity;
+                float maxScore = float.NegativeInfinity;
+                float sum = 0f;
+                for (int j = 0; j < s.judgeScores.Length; j++)
+                {
+                    float score = s.judgeScores[j];
+                    if (score < minScore) minScore = score;
+                    if (score > maxScore) maxScore = score;
+                    sum += score;
+                }
+                // Toss out the highest and lowest scores, then compute the average
+                sum -= maxScore;
+                sum -= minScore;
+                float averageScore = sum / (s.judgeScores.Length - 2);
+                result.elementScores[e] = averageScore;
+                result.totalScore += averageScore;
+                if (averageScore < lowestScore) lowestScore = averageScore;
+                else if (averageScore < secondLowestScore) secondLowestScore = averageScore;
+                else if (averageScore < thirdLowestScore) thirdLowestScore = averageScore;
+            }
+            // Toss out the 3 lowest element scores
+            result.totalScore -= thirdLowestScore;
+            result.totalScore -= secondLowestScore;
+            result.totalScore -= lowestScore;
+            return result;
         }
 
         /**************************************************************************************************/
