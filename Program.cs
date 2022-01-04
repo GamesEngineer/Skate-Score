@@ -66,18 +66,18 @@ namespace Skate_Score
 
             Result[] results = new Result[competitors.Length];
 
-            for (int c = 0; c < competitors.Length; c++)
+            for (int competitorIndex = 0; competitorIndex < competitors.Length; competitorIndex++)
             {
-                results[c] = ComputeResult(c);
+                results[competitorIndex] = ComputeResult(competitorIndex);
             }
 
             Array.Sort(results, (a, b) => Math.Sign(b.totalScore - a.totalScore));
 
-            Console.WriteLine("NAME                 NOC  TOTAL   Run1   Run2 Trick1 Trick2 Trick3 Trick4 Trick5");
+            Console.WriteLine("RANK NAME                 NOC  TOTAL   Run1   Run2 Trick1 Trick2 Trick3 Trick4 Trick5");
             for (int i = 0; i < results.Length; i++)
             {
                 var r = results[i];
-                Console.WriteLine($"{r.competitor.name,-20} {r.competitor.country,3} {r.totalScore,6:F2} {r.elementScores[0],6:F2} {r.elementScores[1],6:F2} {r.elementScores[2],6:F2} {r.elementScores[3],6:F2} {r.elementScores[4],6:F2} {r.elementScores[5],6:F2} {r.elementScores[6],6:F2}");
+                Console.WriteLine($"{i+1,-4} {r.competitor.name,-20} {r.competitor.country,3} {r.totalScore,6:F2} {r.elementScores[0],6:F2} {r.elementScores[1],6:F2} {r.elementScores[2],6:F2} {r.elementScores[3],6:F2} {r.elementScores[4],6:F2} {r.elementScores[5],6:F2} {r.elementScores[6],6:F2}");
             }
             Console.WriteLine();
         }
